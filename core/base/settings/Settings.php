@@ -5,6 +5,7 @@ namespace core\base\settings;
 
 class Settings
 {
+                         //  властивість маршрутів
     static private $_instance;
 
     private $routes = [
@@ -50,18 +51,19 @@ class Settings
     private function __clone()
     {
     }
-
+                      //метод повернення властивостей проперті
     static public function get($property){
         return self::instance()->$property;
     }
-
+                   // шаблон проектування сінгл тон
     static public function instance(){
         if(self::$_instance instanceof self){
             return self::$_instance;
         }
         return self::$_instance = new self();
     }
-
+                //.......................................
+                // метод склеювання свойств
     public function clueProperties($class){
         $baseProperties = [];
 
@@ -76,11 +78,13 @@ class Settings
         }
         return $baseProperties;
     }
-
+                 //..................................
+                // метод склеювання масивів
     public function arrayMergeRecursive(){
         $arrays = func_get_args();
 
         $base = array_shift($arrays);
+
         foreach ($arrays as $array){
             foreach ($array as $key => $value){
                 if (is_array($value) && is_array($base[$key])){
