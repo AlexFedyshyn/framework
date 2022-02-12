@@ -40,7 +40,7 @@ class Settings
     ];
 
     private $templateArr = [
-        'text' => ['name', 'phone', 'adress'],
+        'text' => ['name', 'phone', 'address'],
         'textarea' => ['content', 'keywords']
     ];
 
