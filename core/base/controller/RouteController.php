@@ -4,7 +4,7 @@ namespace core\base\controller;
 use core\base\exceptions\RouteException;
 use core\base\settings\Settings;
 use core\base\settings\ShopSettings;
-
+                                //Система маршрутизації.розбір адресної строки .....
 class RouteController extends BaseController
 {
     static private $_instance;
@@ -15,13 +15,15 @@ class RouteController extends BaseController
     private function __clone()
     {
     }
-
+                             //Шаблон проектування "сінгл тон"
     static public function getInstance(){
         if(self::$_instance instanceof self){
             return self::$_instance;
         }
+
         return self::$_instance = new self;
     }
+                            //.................................
     private function __construct()
     {
         $adress_str = $_SERVER['REQUEST_URI'];

@@ -1,18 +1,18 @@
 <?php
 
-define('VG_ACCESS', true);
+define('VG_ACCESS', true);                                                      // константа безпеки
 
-header('Content-Type:text/html;charset-utf8');
-session_start();
+header('Content-Type:text/html;charset-utf8');                           // відпр. користувачу заголовків
+session_start();                                                               //старт сесії
 
-require_once 'config.php';
-require_once 'core/base/settings/internal_settings.php';
+require_once 'config.php';                                                    //  файл настройки для розміщення на хоті
+require_once 'core/base/settings/internal_settings.php';                      //розширені внутрішні настройки
 
-use core\base\exceptions\RouteException;
+use core\base\exceptions\RouteException;                                      //імпорт виключень
 use core\base\controller\RouteController;
-
+          // обробка виключень
 try{
-    RouteController::getInstance()->route();
+    RouteController::getInstance()->route();                         //виклик статичного метода у класа олут контроллер
 
 }
 catch(RouteException $e){
