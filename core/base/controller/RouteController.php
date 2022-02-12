@@ -26,21 +26,22 @@ class RouteController extends BaseController
                             //.................................
     private function __construct()
     {
-        $adress_str = $_SERVER['REQUEST_URI'];
-
-        if(strrpos($adress_str, '/') === strlen($adress_str) - 1 && strrpos($adress_str, '/') !== 0){
-            $this->redirect(rtrim($adress_str, '/'), 301);
+                 // получення адресної строки
+        $address_str = $_SERVER['REQUEST_URI'];
+                //перевірка чи це не корневий сайт ,якщо ні перенаправляєм його
+        if(strrpos($address_str, '/') === strlen($address_str) - 1 && strrpos($address_str, '/') !== 0){
+            $this->redirect(rtrim($address_str, '/'), 301);
         }
-
+                //дії коли не виконається редірект
         $path = substr($_SERVER['PHP_SELF'], 0, strpos($_SERVER['PHP_SELF'], 'index.php'));
-
+        //перевірка настройки сервера
         if($path === PATH) {
-
+            //получаєм властивість роут класу сетінгс
             $this->routes = Settings::get('routes');
-
+            // якщо маршрути не описанні  виводимо виключення
             if(!$this->routes) throw new RouteException('site in the tech work');
-
-            $url = explode('/', substr($adress_str, strlen(PATH)));
+            //перевірка чи не в адмінку заходить користувач
+            $url = explode('/', substr($address_str, strlen(PATH)));
 
             if($url[0] && $url[0] === $this->routes['admin']['alias']){
 
@@ -74,10 +75,10 @@ class RouteController extends BaseController
                 }
 
             }else{
-
+                //якщо не адмін часть,то ми працюємо з контролерами користувача
 
                 $hrUrl = $this->routes['user']['hrUrl'];
-
+                //звідки підкл.чаємо контроллери
                 $this->controller = $this->routes['user']['path'];
 
                 $route = 'user';
@@ -107,6 +108,7 @@ class RouteController extends BaseController
             }
 
         }else{
+            //виключення при поганій настройці сервера "шлях !== шлях серв"
             try{
                 throw new \Exception('wrong direct');
             }
@@ -115,19 +117,19 @@ class RouteController extends BaseController
             }
         }
     }
-
+                //метод створення маршрутів
     private function createRoute($var, $arr){
         $route = [];
-
+            // перевірка чи не пустий масив ,то це є контроллер
         if(!empty($arr[0])){
-            if($this->routes[$var]['routes'][$arr[0]]){
+            if($this->routes[$var]['routes'][$arr[0]]){                                 //перевірка чи є еліас маршрутів
                 $route = explode('/', $this->routes[$var]['routes'][$arr[0]]);
 
                 $this->controller .= ucfirst($route[0].'Controller');
             }else{
-                $this->controller .= ucfirst($arr[0].'Controller');
+                $this->controller .= ucfirst($arr[0].'Controller');              //якщо маршрут не описаний
             }
-        }else{
+        }else{                                                                      //якщо арр пустий підключаємо дефолт
             $this->controller .= $this->routes['default']['controller'];
         }
 
