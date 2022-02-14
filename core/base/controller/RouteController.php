@@ -1,6 +1,7 @@
 <?php
 
 namespace core\base\controller;
+
 use core\base\exceptions\RouteException;
 use core\base\settings\Settings;
 use core\base\settings\ShopSettings;
@@ -46,6 +47,7 @@ class RouteController extends BaseController
             if($url[0] && $url[0] === $this->routes['admin']['alias']){
 
                 array_shift($url);
+
                 if($url[0] && is_dir($_SERVER['DOCUMENT_ROOT'] . PATH . $this->routes['plugins']['path'] . $url[0])){
 
                     $plugin = array_shift($url);
@@ -56,6 +58,7 @@ class RouteController extends BaseController
                         $pluginSettings = str_replace('/', '\\', $pluginSettings);
                         $this->routes = $pluginSettings::get('routes');
                     }
+
 
                     $dir = $this->routes['plugins']['dir'] ? '/' . $this->routes['plugins']['dir'] . '/' : '/';
                     $dir = str_replace('//', '/' , $dir);

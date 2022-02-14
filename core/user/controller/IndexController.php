@@ -14,9 +14,5 @@ class IndexController extends BaseController {
 
         return compact('header', 'content', 'footer');
     }
-
-    protected function outputData(){
-        $vars = func_get_arg(0);
-        return $this->render(TEMPLATE.'templater', $vars);
-    }
+    
 }

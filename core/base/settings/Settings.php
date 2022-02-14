@@ -91,7 +91,7 @@ class Settings
                     $base[$key] = $this->arrayMergeRecursive($base[$key], $value);
                 }else{
                     if(is_int($key)){
-                        if(!in_array($value,$base)) array_push($base,$value);
+                        if(!in_array($value,$base)) array_push($base, $value);
                         continue;
                     }
                     $base[$key] = $value;
