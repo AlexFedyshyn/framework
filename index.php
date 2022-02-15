@@ -12,7 +12,7 @@ use core\base\exceptions\RouteException;                                      //
 use core\base\controller\RouteController;
           // обробка виключень
 try{
-    RouteController::getInstance()->route();                         //виклик статичного метода у класа роут контроллер
+    RouteController::instance()->route();                         //виклик статичного метода у класа роут контроллер
 
 }
 catch(RouteException $e){

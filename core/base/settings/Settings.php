@@ -3,11 +3,12 @@
 namespace core\base\settings;
 
 
+use core\base\controller\Singleton;
+
 class Settings
 {
+    use Singleton;
                          //  властивість маршрутів
-    static private $_instance;
-
     private $routes = [
       'admin' => [
           'alias' => 'admin',
@@ -36,7 +37,8 @@ class Settings
           'controller' => 'IndexController',
           'inputMethod' => 'inputData',
           'outputMethod' => 'outputData'
-      ]
+      ],
+        'p'=>[1,2,3]
     ];
 
     private $templateArr = [
@@ -44,25 +46,10 @@ class Settings
         'textarea' => ['content', 'keywords']
     ];
 
-    private function __construct()
-    {
-    }
-
-    private function __clone()
-    {
-    }
                       //метод повернення властивостей проперті
     static public function get($property){
         return self::instance()->$property;
     }
-                   // шаблон проектування сінгл тон
-    static public function instance(){
-        if(self::$_instance instanceof self){
-            return self::$_instance;
-        }
-        return self::$_instance = new self();
-    }
-                //.......................................
                 // метод склеювання свойств
     public function clueProperties($class){
         $baseProperties = [];

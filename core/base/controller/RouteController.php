@@ -4,27 +4,15 @@ namespace core\base\controller;
 
 use core\base\exceptions\RouteException;
 use core\base\settings\Settings;
-use core\base\settings\ShopSettings;
                                 //Система маршрутизації.розбір адресної строки .....
 class RouteController extends BaseController
 {
-    static private $_instance;
+    use Singleton;
+
     protected $routes;
 
 
 
-    private function __clone()
-    {
-    }
-                             //Шаблон проектування "сінгл тон"
-    static public function getInstance(){
-        if(self::$_instance instanceof self){
-            return self::$_instance;
-        }
-
-        return self::$_instance = new self;
-    }
-                            //.................................
     private function __construct()
     {
                  // получення адресної строки
@@ -40,7 +28,7 @@ class RouteController extends BaseController
             //получаєм властивість роут класу сетінгс
             $this->routes = Settings::get('routes');
             // якщо маршрути не описанні  виводимо виключення
-            if(!$this->routes) throw new RouteException('site in the tech work');
+            if(!$this->routes) throw new RouteException('Відсутні маршрути в базових настройках', 1);
             //перевірка чи не в адмінку заходить користувач
             $url = explode('/', substr($address_str, strlen(PATH)));
 
@@ -112,12 +100,9 @@ class RouteController extends BaseController
 
         }else{
             //виключення при поганій настройці сервера "шлях !== шлях серв"
-            try{
-                throw new \Exception('wrong direct');
-            }
-            catch(\Exception $e){
-                exit($e->getMessage());
-            }
+            throw new RouteException('не коректна директорія сайту', 1);
+
+
         }
     }
                 //метод створення маршрутів

@@ -1,11 +1,13 @@
 <?php
 
 namespace core\base\settings;
+use core\base\controller\Singleton;
 use core\base\settings\Settings;
 
 class ShopSettings
 {
-    static private $_instance;
+    use Singleton;
+
     private $baseSettings;
 
     private $routes = [
@@ -16,6 +18,7 @@ class ShopSettings
 
           ]
       ],
+        'p' => [4,5,6]
     ];
     private $templateArr = [
         'text' => ['price', 'short'],
@@ -24,16 +27,16 @@ class ShopSettings
 
 // получ властивостей
     static public function get($property){
-        return self::instance()->$property;
+        return self::getInstance()->$property;
     }
 // сінгл тон ,створення обєкту даного класу
-    static public function instance(){
+    static private function getInstance(){
         if(self::$_instance instanceof self){
             return self::$_instance;
         }
 // створення обєкту класу сетінгс
-        self::$_instance = new self;
-        self::$_instance->baseSettings = Settings::instance();
+
+        self::instance()->baseSettings = Settings::instance();
         $baseProperties = self::$_instance->baseSettings->clueProperties(get_class()); //виклик методу склеювання властивостей
         self::$_instance->setProperty($baseProperties);
 //.................................
@@ -48,11 +51,5 @@ class ShopSettings
         }
     }
 
-    private function __construct()
-    {
-    }
 
-    private function __clone()
-    {
-    }
 }
