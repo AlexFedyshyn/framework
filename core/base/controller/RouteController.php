@@ -99,7 +99,7 @@ class RouteController extends BaseController
             }
 
         }else{
-            //виключення при поганій настройці сервера "шлях !== шлях серв"
+
             throw new RouteException('не коректна директорія сайту', 1);
 
 
