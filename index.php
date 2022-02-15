@@ -10,11 +10,15 @@ require_once 'core/base/settings/internal_settings.php';                      //
 
 use core\base\exceptions\RouteException;                                      //імпорт виключень
 use core\base\controller\RouteController;
+use core\base\exceptions\DbException;
           // обробка виключень
 try{
     RouteController::instance()->route();                         //виклик статичного метода у класа роут контроллер
 
 }
 catch(RouteException $e){
+    exit($e->getMessage());
+}
+catch(DbException $e){
     exit($e->getMessage());
 }
